@@ -2,24 +2,36 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
+# Predefined fraud law mapping
+fraud_laws = {
+    "upi": {
+        "law": "Section 66C & 66D of IT Act, 2000 (Identity Theft & Cheating by Personation)",
+        "complaint": "I am writing to report unauthorized UPI transactions from my bank account. The fraudster impersonated and cheated me using digital payment platforms."
+    },
+    "atm": {
+        "law": "Section 420 IPC & Section 66 of IT Act (Cheating & Computer-related offenses)",
+        "complaint": "I wish to lodge a complaint regarding unauthorized ATM withdrawals. My ATM card details were misused without my consent."
+    },
+    "identity": {
+        "law": "Section 66C IT Act (Identity Theft)",
+        "complaint": "My personal identity details were stolen and misused online. I request strict action against the offender."
+    },
+    "cyberbullying": {
+        "law": "Section 67 IT Act (Publishing/Transmitting Obscene Content), Section 354D IPC (Cyberstalking)",
+        "complaint": "I am facing repeated harassment and abusive messages online. This constitutes cyberbullying and stalking."
+    }
+}
+
+
 @app.get("/")
 def root():
     return {"message": "Hello Cyber Sahayak"}
 
-@app.get("/guidance/{category}")
-def get_guidance(category: str):
-    guidance_map = {
-        "upi_fraud": [
-            "Step 1: Immediately call your bank and request UPI hotlisting.",
-            "Step 2: Change your UPI PIN.",
-            "Step 3: Report the fraud at the NCRP portal (cybercrime.gov.in).",
-            "Step 4: Keep all transaction IDs handy."
-        ],
-        "social_media": [
-            "Step 1: Take screenshots of abusive content.",
-            "Step 2: Use in-app reporting (Instagram, Facebook, etc.).",
-            "Step 3: File complaint at NCRP portal.",
-            "Step 4: Contact local cyber police if threat persists."
-        ]
-    }
-    return {"category": category, "steps": guidance_map.get(category, ["No guidance available for this category."])}
+
+@app.get("/law/{fraud_type}")
+def get_law(fraud_type: str):
+    fraud_type = fraud_type.lower()
+    if fraud_type in fraud_laws:
+        return {"fraud_type": fraud_type, "law": fraud_laws[fraud_type]["law"], "complaint": fraud_laws[fraud_type]["complaint"]}
+    else:
+        return {"error": "Fraud type not found. Try: upi, atm, identity, cyberbullying"}
