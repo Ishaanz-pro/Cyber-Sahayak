@@ -35,3 +35,6 @@ def get_law(fraud_type: str):
         return {"fraud_type": fraud_type, "law": fraud_laws[fraud_type]["law"], "complaint": fraud_laws[fraud_type]["complaint"]}
     else:
         return {"error": "Fraud type not found. Try: upi, atm, identity, cyberbullying"}
+@app.get("/guidance")
+def get_guidance():
+    return {"law": "Section 66C: Identity Theft", "steps": ["File FIR", "Keep digital evidence"]}

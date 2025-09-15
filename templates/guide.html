@@ -9,5 +9,13 @@
     <p><strong>Steps:</strong> {{ guidance }}</p>
     <br>
     <a href="/report">⬅ Back to Report</a>
+    <script>fetch("http://127.0.0.1:8000/guidance")
+  .then(response => response.json())
+  .then(data => {
+    document.getElementById("law").innerText = data.law;
+    document.getElementById("steps").innerText = data.steps.join(", ");
+  })
+  .catch(err => console.error("Error:", err));
+</script>
 </body>
 </html>
