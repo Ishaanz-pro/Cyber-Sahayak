@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Report Cybercrime</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 30px; }
+        h2 { color: #2c3e50; }
+        select, button {
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            background: #f0f8ff;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Report a Cybercrime 🚨</h2>
+    <form method="POST">
+        <label for="category">Choose Complaint Type:</label><br>
+        <select name="category" required>
+            <option value="upi">UPI Fraud</option>
+            <option value="social">Social Media Harassment</option>
+            <option value="job">Fake Job Scam</option>
+            <option value="loan">Loan App Fraud</option>
+        </select><br>
+        <button type="submit">Get Guidance</button>
+    </form>
+
+    {% if guidance %}
+    <div class="result">
+        <strong>Guidance:</strong>
+        <p>{{ guidance }}</p>
+    </div>
+    {% endif %}
+
+    <p><a href="/">⬅ Back to Home</a></p>
+</body>
+</html>
