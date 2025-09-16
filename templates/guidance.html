@@ -1,0 +1,35 @@
+<h2>Cyber Guidance</h2>
+<form id="guidanceForm">
+  <input type="text" id="query" placeholder="Describe your issue" required>
+  <button type="submit">Get Guidance</button>
+</form>
+
+<h3>Law:</h3>
+<p id="law"></p>
+
+<h3>Steps:</h3>
+<ul id="steps"></ul>
+
+<script>
+document.getElementById("guidanceForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+    const query = document.getElementById("query").value;
+
+    const response = await fetch("http://127.0.0.1:8000/get-guidance", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({query: query})
+    });
+
+    const data = await response.json();
+    document.getElementById("law").innerText = data.law;
+
+    let stepsList = document.getElementById("steps");
+    stepsList.innerHTML = "";
+    data.steps.forEach(step => {
+        let li = document.createElement("li");
+        li.textContent = step;
+        stepsList.appendChild(li);
+    });
+});
+</script>

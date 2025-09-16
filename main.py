@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
@@ -38,3 +40,37 @@ def get_law(fraud_type: str):
 @app.get("/guidance")
 def get_guidance():
     return {"law": "Section 66C: Identity Theft", "steps": ["File FIR", "Keep digital evidence"]}
+# Enable CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Request body model
+class UserQuery(BaseModel):
+    query: str
+
+@app.post("/get-guidance")
+def get_guidance(user: UserQuery):
+    # For now, return dummy guidance
+    if "upi" in user.query.lower():
+        return {
+            "law": "Section 66C – Identity Theft (IT Act)",
+            "steps": [
+                "Report to bank immediately",
+                "File complaint at cybercrime.gov.in",
+                "Register FIR with police"
+            ]
+        }
+    else:
+        return {
+            "law": "Section 66D – Cheating by Impersonation (IT Act)",
+            "steps": [
+                "Collect all evidence",
+                "File complaint at cybercrime.gov.in",
+                "Visit nearest cyber cell"
+            ]
+        }
