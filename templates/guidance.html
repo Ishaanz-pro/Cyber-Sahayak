@@ -3,6 +3,21 @@
   <input type="text" id="query" placeholder="Describe your issue" required>
   <button type="submit">Get Guidance</button>
 </form>
+<h2>Guidance for {{ data.fraud_type }}</h2>
+
+{% if data.error %}
+    <p style="color:red;">Error: {{ data.error }}</p>
+{% else %}
+    <p><b>Law:</b> {{ data.law }}</p>
+    <p><b>Steps:</b></p>
+    <ul>
+        {% for step in data.steps %}
+            <li>{{ step }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<a href="/">⬅ Back to Home</a>
 
 <h3>Law:</h3>
 <p id="law"></p>

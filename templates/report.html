@@ -32,6 +32,17 @@
         </select><br>
         <button type="submit">Get Guidance</button>
     </form>
+    <h2>Report Cyber Fraud</h2>
+<form method="POST">
+    <label>Select Fraud Type:</label>
+    <select name="fraud_type">
+        <option value="UPI Fraud">UPI Fraud</option>
+        <option value="Online Shopping Scam">Online Shopping Scam</option>
+        <option value="Phishing">Phishing</option>
+    </select>
+    <br><br>
+    <button type="submit">Get Guidance</button>
+</form>
 
     {% if guidance %}
     <div class="result">
